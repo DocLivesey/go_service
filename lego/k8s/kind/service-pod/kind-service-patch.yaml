@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-service-deployment
+  namespace: go-service
+spec:
+  selector:
+    matchLabels:
+      app: go_service
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: go_service
+    spec:
+      containers:
+      - image:  service-amd64:1.0
+        name:  service-app
+        resources:
+          requests:
+            cpu: "1000m"
+          limits:
+            cpu: "2000m"

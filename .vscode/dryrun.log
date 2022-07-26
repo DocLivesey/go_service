@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/kuro/dev/go_service'
+go run main.go
+make: Leaving directory '/home/kuro/dev/go_service'
+ 

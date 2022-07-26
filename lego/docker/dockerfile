@@ -1,0 +1,19 @@
+#Build env
+FROM golang:1.18 as go_service
+ENV CGO_ENABLED 0
+ARG BUILD_REF
+
+#copy source into the container
+COPY . /service
+
+#build from source
+WORKDIR /service
+RUN go build -ldflags "-X main.build=${BUILD_REF}"
+
+#running env
+FROM alpine:3.14
+ARG BUILD_DATE
+ARG BUILD_REF
+COPY --from=go_service /service/go_service /service/go_service
+WORKDIR /service
+CMD [ "./go_service" ]
