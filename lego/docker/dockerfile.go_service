@@ -7,13 +7,13 @@ ARG BUILD_REF
 COPY . /service
 
 #build from source
-WORKDIR /service
+WORKDIR /service/app/services/go_service
 RUN go build -ldflags "-X main.build=${BUILD_REF}"
 
 #running env
 FROM alpine:3.14
 ARG BUILD_DATE
 ARG BUILD_REF
-COPY --from=go_service /service/go_service /service/go_service
+COPY --from=go_service /service/app/services/go_service/go_service /service/go_service
 WORKDIR /service
 CMD [ "./go_service" ]

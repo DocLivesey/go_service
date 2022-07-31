@@ -6,12 +6,12 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 24 14:05:13 2022
+# Make data base, printed on Fri Jul 29 17:08:11 2022
 
 # Variables
 
 # environment
-TMUX_PANE = %5
+TMUX_PANE = %0
 # environment
 GDK_BACKEND = x11
 # environment
@@ -21,7 +21,7 @@ NO_AT_BRIDGE = 1
 # environment
 GTK_RC_FILES = /etc/gtk/gtkrc:/home/kuro/.gtkrc:/home/kuro/.config/gtkrc
 # environment
-KONSOLE_DBUS_SERVICE = :1.64
+KONSOLE_DBUS_SERVICE = :1.48
 # environment
 LC_NAME = ru_RU.UTF-8
 # environment
@@ -29,7 +29,7 @@ LC_NUMERIC = ru_RU.UTF-8
 # environment
 VSCODE_CWD = /home/kuro/dev/go_service
 # environment
-WINDOWID = 62914567
+WINDOWID = 65011719
 # environment
 LESS_TERMCAP_me = [0m
 # environment
@@ -38,12 +38,10 @@ LC_ADDRESS = ru_RU.UTF-8
 MAKE_COMMAND := make
 # environment
 GTK3_MODULES = xapp-gtk3-module
-# environment
-GOPATH = /home/kuro/go
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
-KONSOLE_VERSION = 220402
+KONSOLE_VERSION = 220403
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -92,7 +90,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 POWERLINE_COMMAND = powerline
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
-# makefile (from 'makefile', line 9)
+# makefile (from 'makefile', line 13)
 VERSION := 1.0
 # environment
 LESS_TERMCAP_ue = [0m
@@ -119,15 +117,15 @@ MAKEFILE_LIST := makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 162269
+VSCODE_PID = 5883
 # environment
 XDG_SESSION_TYPE = x11
 # environment
-TMUX = /tmp/tmux-1000/default,2632,0
+TMUX = /tmp/tmux-1000/default,4741,0
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/kuro-hp14sfq0xx:@/tmp/.ICE-unix/1016,unix/kuro-hp14sfq0xx:/tmp/.ICE-unix/1016
+SESSION_MANAGER = local/kuro-hp14sfq0xx:@/tmp/.ICE-unix/980,unix/kuro-hp14sfq0xx:/tmp/.ICE-unix/980
 # automatic
 *F = $(notdir $*)
 # environment
@@ -177,9 +175,11 @@ LC_TIME = ru_RU.UTF-8
 # environment
 LESS_TERMCAP_mb = [01;32m
 # environment
+INVOCATION_ID = ba1af724da7e409c931f4c2fae1cb680
+# environment
 TERM_PROGRAM = tmux
-# makefile (from 'makefile', line 24)
-KIND_KLUSTER := go-service-kind
+# makefile (from 'makefile', line 28)
+KIND_KLUSTER := go-service-deployment
 # environment
 LC_TELEPHONE = ru_RU.UTF-8
 # automatic
@@ -211,7 +211,7 @@ XDG_VTNR = 1
 # makefile
 .DEFAULT_GOAL := run
 # environment
-SYSTEMD_EXEC_PID = 909
+SYSTEMD_EXEC_PID = 1432
 # environment
 DISPLAY = :0
 # environment
@@ -225,6 +225,8 @@ KDE_SESSION_UID = 1000
 # environment
 KONSOLE_DBUS_SESSION = /Sessions/1
 # environment
+MANAGERPID = 884
+# environment
 LC_MEASUREMENT = ru_RU.UTF-8
 # environment
 _ = /usr/bin/make
@@ -235,7 +237,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 COLORTERM = truecolor
 # environment
-GOMODCACHE = /home/kuro/go/pkg/mod
+JOURNAL_STREAM = 8:23371
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -254,8 +256,6 @@ TERM = tmux-256color
 XDG_SESSION_ID = 2
 # environment
 XCURSOR_SIZE = 24
-# environment
-GOPROXY = https://proxy.golang.org,direct
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -272,9 +272,9 @@ VSCODE_CLI = 1
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
 LS_OPTIONS = --color=auto
- 
 # environment
-SHELL_SESSION_ID = 9fd7b6e057f74deb81d0d1aaa8f75cc6
+SHELL_SESSION_ID = c77d3d463fca40ba93ba57e733df636b
+ 
 # environment
 KDE_SESSION_VERSION = 5
 # default
@@ -296,9 +296,9 @@ LC_IDENTIFICATION = ru_RU.UTF-8
 
 # Directories
 
-# . (device 43, inode 1726904): 11 files, no impossibilities.
+# . (device 42, inode 1726904): 13 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -306,14 +306,56 @@ LC_IDENTIFICATION = ru_RU.UTF-8
 
 # Files
 
+kind-load:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 41):
+	cd lego/k8s/kind/service-pod; kustomize edit set image go_service-image:${VERSION}
+	kind load docker-image go_service-amd64:${VERSION} --name ${KIND_KLUSTER}
+
+kind-status-all:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 48):
+	kubectl get nodes -o wide
+	kubectl get svc -o wide
+	kubectl get pods -o wide --watch --all-namespaces
+
+kind-update-apply: all kind-load kind-apply
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+tidy:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 7):
+	go mod tidy
+	go mod vendor
+
+kind-apply:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 45):
+	kustomize build lego/k8s/kind/service-pod/ | kubectl apply -f -
+
+kind-describe:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 59):
+	kubectl describe pod -l app=go_service
+
 kind-status:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 37):
-	kubectl get nodes -o wide
-	kubectl get svc -o wide
-	kubectl get pods -o wide --watch --all-namespaces
+#  recipe to execute (from 'makefile', line 53):
+	kubectl get pods -o wide --watch 
 
 # Not a target:
 .DEFAULT:
@@ -335,22 +377,30 @@ run:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 4):
-	go run main.go
+	go run app/services/go_service/main.go | go run app/tool/logfmt/main.go
 
 kind-up:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 27):
+#  recipe to execute (from 'makefile', line 31):
 	kind create cluster \
-		--image kindest/node:v1.24.2 \
+		--image kindest/node:v1.24.0@sha256:0866296e693efe1fed79d5e6c7af8df71fc73ae45e3679af05342239cdc5bc8e \
 		--name ${KIND_KLUSTER} \
 		--config ./lego/k8s/kind/kind-config.yaml
+	kubectl config set-context --current --namespace=go-service
+
+kind-restart:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 62):
+	kubectl rollout restart deployment go-service-deployment
 
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-24 13:50:19.906168438
+#  Last modified 2022-07-29 01:29:05.575323827
 #  File has been updated.
 #  Successfully updated.
 
@@ -378,16 +428,28 @@ service:
 # | := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=11/13=85%
-#  recipe to execute (from 'makefile', line 14):
+#  recipe to execute (from 'makefile', line 18):
 	docker build \
-	-f lego/docker/dockerfile \
-	-t service-amd64:${VERSION} \
+	-f lego/docker/dockerfile.go_service \
+	-t go_service-amd64:${VERSION} \
 	--build-arg BUILD_REF=${VERSION} \
 	--build-arg BUILD_DATE='date -u +"%d-%m-%Y  %H:%M:%S"' \
 	.
 
+kind-logs:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 56):
+	kubectl logs -l app=go_service --all-containers=true -f --tail=100 
+
 # Not a target:
 .SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+kind-update: all kind-load kind-restart
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -396,23 +458,23 @@ kind-down:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 34):
+#  recipe to execute (from 'makefile', line 38):
 	kind delete cluster --name ${KIND_KLUSTER}
 
 # files hash-table stats:
-# Load=9/1024=1%, Rehash=0, Collisions=0/23=0%
+# Load=18/1024=2%, Rehash=0, Collisions=0/38=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 176 B / avg = 8 B
-# current buf: size = 8162 B / used = 176 B / count = 21 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 32 / storage = 298 B / avg = 9 B
+# current buf: size = 8162 B / used = 298 B / count = 32 / avg = 9 B
 
-# strcache performance: lookups = 34 / hit rate = 38%
+# strcache performance: lookups = 60 / hit rate = 46%
 # hash-table stats:
-# Load=21/8192=0%, Rehash=0, Collisions=0/34=0%
-# Finished Make data base on Sun Jul 24 14:05:13 2022
+# Load=32/8192=0%, Rehash=0, Collisions=0/60=0%
+# Finished Make data base on Fri Jul 29 17:08:11 2022
 
  

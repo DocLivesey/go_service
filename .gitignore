@@ -1,9 +1,4 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+app/services/go_service/go_service
 
 # Test binary, built with `go test -c`
 *.test

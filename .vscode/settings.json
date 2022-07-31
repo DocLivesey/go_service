@@ -6,5 +6,8 @@
             "*.yml"
         ],
         "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.4-standalone-strict/all.json": "file:///home/kuro/dev/go_service/lego/k8s/base/service-pod/base-service.yaml"
-    }
+    },
+    "editor.rulers": [
+    100
+    ]
 }

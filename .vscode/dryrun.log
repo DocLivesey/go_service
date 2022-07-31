@@ -1,5 +1,10 @@
-make --dry-run --always-make --keep-going --print-directory
+make all --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/kuro/dev/go_service'
-go run main.go
+docker build \
+-f lego/docker/dockerfile.go_service \
+-t go_service-amd64:1.0 \
+--build-arg BUILD_REF=1.0 \
+--build-arg BUILD_DATE='date -u +"%d-%m-%Y  %H:%M:%S"' \
+.
 make: Leaving directory '/home/kuro/dev/go_service'
  

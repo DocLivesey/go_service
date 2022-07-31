@@ -6,18 +6,18 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: go_service
+      app: go-service-app
   replicas: 1
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: go_service
+        app: go-service-app
     spec:
       containers:
-      - image:  service-amd64:1.0
-        name:  service-app
+      - image:  go_service-amd64:1.0
+        name:  go-service-app
         resources:
           requests:
             cpu: "1000m"

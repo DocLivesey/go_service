@@ -12,16 +12,40 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: go_service
+      app: go-service-app
   template:
     metadata:
       labels:
-        app: go_service
+        app: go-service-app
     spec:
-      containers:
-        - name: service-app
-          image: service-amd64:1.0
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
       terminationGracePeriodSeconds: 60
+      containers:
+        - name: go-service-app
+          image: go_service-image
+          ports:
+            - name: go-service-app
+              containerPort: 3000
+            - name: go-service-dbg
+              containerPort: 4000
+
 ---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  go-service-app-service
+spec:
+  selector:
+    app:  go-service-app
+  type: ClusterIP
+  ports:
+  # - name:  zipkin
+  #   port: 9411
+  #   targetPort: zipkin
+  - name:  go-service-app
+    port:  3000
+    targetPort:  go-service-app
+  - name: go-service-dbg
+    port: 4000
+    targetPort: go-service-dbg
