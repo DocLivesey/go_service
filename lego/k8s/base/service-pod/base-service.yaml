@@ -29,6 +29,11 @@ spec:
               containerPort: 3000
             - name: go-service-dbg
               containerPort: 4000
+          readinessProbe:
+            httpGet:
+              path: /debug/readiness
+              port: 4000
+            initialDelaySeconds: 15
 
 ---
 kind: Service
